@@ -96,7 +96,6 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
 \$config = (object) [
     'sitename' => '$project_name',
     'url' => '$project_url',
-    'root' => __DIR__ . '/',
     'version' => '0.1.0',
     'locale' => 'en_US',
     'debug' => true,
