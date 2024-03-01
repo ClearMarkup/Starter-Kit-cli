@@ -71,20 +71,6 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
             break;
     }
 
-    function arrayToString($array)
-    {
-        $result = "[\n";
-        foreach ($array as $key => $value) {
-            if (strpos($value, '__DIR__') === 0) {
-                $result .= "        '" . $key . "' => " . $value . ",\n";
-            } else {
-                $result .= "        '" . $key . "' => '" . $value . "',\n";
-            }
-        }
-        $result .= "    ]";
-        return $result;
-    }
-
     $output = trim("
         # App settings
         SITENAME=$project_name
