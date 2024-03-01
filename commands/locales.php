@@ -37,12 +37,14 @@ $cli->command('locales:add', 'Add a new locale', function () {
         foreach ($iterator as $file) {
             if ($file->isDir() || $file->getExtension() !== 'php') continue;
             $files[] = escapeshellarg($file->getPathname());
+            $this->print('Adding: ' . $file->getPathname());
         }
     }
 
     if ($files) {
         $command = 'xgettext -o ' . escapeshellarg($outputFile) . ' ' . implode(' ', $files);
         shell_exec($command);
+        $this->print('Updated: ' . $outputFile, 'green');
     }
 
     // Replace "CHARSET" with "UTF-8" in the .po file

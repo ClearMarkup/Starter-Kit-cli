@@ -15,13 +15,13 @@ class CLI {
             echo $this->commands[$command]['help'] . PHP_EOL;
             return;
         }
-
+    
         $this->print("Usage: " . $this->argv[0] . " <command> [options]");
         $this->print("Available commands:");
-        $this->print("  help, -h - Show this help message", 'light_blue');
+        printf("  \033[1;34m%-5s %-20s\033[0m %s\n", "-h", "help", "Show this help message");
         foreach ($this->commands as $command => $data) {
-            $shortcut = isset($data['shortcut']) ? ', -' . $data['shortcut'] : '';
-            $this->print("  " . $command . $shortcut . " - " . $data['help'], 'light_blue');
+            $shortcut = isset($data['shortcut']) ? '-' . $data['shortcut'] : '';
+            printf("  \033[1;34m%-5s %-20s\033[0m %s\n", $shortcut , $command, $data['help']);
         }
     }
 

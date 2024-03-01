@@ -21,6 +21,8 @@ class $class_name
         
     }
 }");
+
+    $this->print("$class_name has been created.", 'green');
 }, 'ca');
 
 $cli->command('class:extends', 'Extend a class', function () {
@@ -73,7 +75,8 @@ class Extended$class_name extends $class_name
                 file_put_contents($file->getPathname(), $file_content);
             }
         }
+        
+        $this->print("All instances of $class_name and 'use ClearMarkup\\Classes\\$class_name;' have been replaced with Extended$class_name and 'use ClearMarkupValidation\Extends\$class_name;'.", 'green');
     }
 
-    $this->print("All instances of $class_name and 'use ClearMarkup\\Classes\\$class_name;' have been replaced with Extended$class_name and 'use ClearMarkupValidation\Extends\$class_name;'.", 'green');
 }, 'ce');
