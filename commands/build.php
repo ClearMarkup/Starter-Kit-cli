@@ -69,6 +69,7 @@ $cli->command('build', 'Build the project', function () {
 
     // Copy composer.json to build directory
     copy(PROJECT_ROOT . 'composer.json', PROJECT_ROOT . 'build/composer.json');
+    copy(PROJECT_ROOT . 'composer.lock', PROJECT_ROOT . 'build/composer.lock');
 
     // Install non-dev dependencies in build directory
     shell_exec('cd ' . PROJECT_ROOT . 'build && composer install --no-dev');

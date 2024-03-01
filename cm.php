@@ -1,5 +1,5 @@
 <?php
-define('PROJECT_ROOT', getcwd() . '/');
+require_once __DIR__ . '/config.php';
 
 require_once 'CLI.php';
 

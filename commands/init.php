@@ -128,7 +128,6 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
         "routes/",
         "locales/",
         "public/",
-        "vendor/",
         "views/",
         "index.php",
         "config.php",
