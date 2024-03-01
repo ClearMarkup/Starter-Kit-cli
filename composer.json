@@ -1,0 +1,19 @@
+{
+    "name" : "clearmarkup/cli",
+    "license": "MIT",
+    "type": "clearmarkup-extension",
+    "description": "ClearMarkup Starter Kit - cli extension",
+    "keywords": ["clearmarkup", "starterkit", "cli"],
+    "homepage": "https://clearmarkup.com",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "ClearMarkup",
+            "email": "support@clearmarkup.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "clearmarkup/core": "dev-master"
+    }
+}
