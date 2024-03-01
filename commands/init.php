@@ -53,9 +53,14 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
         case 'sqlite':
             $database_file = $this->ask("Type the database file:", 'database.sqlite');
 
-            $pdo = new PDO("sqlite:" . PROJECT_ROOT . $database_file);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->exec(file_get_contents(__DIR__ . '/../database/SQLite.sql'));
+            try {
+                $pdo = new PDO("sqlite:" . PROJECT_ROOT . $database_file);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $pdo->exec(file_get_contents(__DIR__ . '/../database/SQLite.sql'));
+            } catch (PDOException $e) {
+                $this->printError($e->getMessage());
+                exit;
+            }
 
             $database = [
                 'type' => 'sqlite',

@@ -1,1 +1,4 @@
 /vendor/
+/build/
+/public/
+/ClearMarkup.json
