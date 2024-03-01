@@ -9,7 +9,7 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
 
     $database_type = $this->ask("Type the database type:", 'mysql');
 
-    $database = [];
+    $database = "";
 
     switch ($database_type) {
         case 'mysql':
@@ -38,16 +38,16 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
                 exit;
             }
 
-            $database = [
-                'type' => $database_type,
-                'host' => $database_host,
-                'port' => $database_port,
-                'database' => $database_name,
-                'username' => $database_username,
-                'password' => $database_password,
-                'charset' => 'utf8mb3',
-                'collation' => 'utf8mb3_general_ci',
-            ];
+            $database = trim("
+                DB_TYPE=$database_type
+                DB_HOST=$database_host
+                DB_PORT=$database_port
+                DB_DATABASE=$database_name
+                DB_USERNAME=$database_username
+                DB_PASSWORD=$database_password
+            ");
+
+            $database = implode("\n", array_map('trim', explode("\n", $database)));
 
             break;
         case 'sqlite':
@@ -62,10 +62,12 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
                 exit;
             }
 
-            $database = [
-                'type' => 'sqlite',
-                'database' => '__DIR__ . \'/\' . \'' . $database_file . '\'',
-            ];
+            $database = trim("
+                DB_TYPE=$database_type
+                DB_DATABASE=$database_file
+            ");
+
+            $database = implode("\n", array_map('trim', explode("\n", $database)));
             break;
     }
 
@@ -83,44 +85,41 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
         return $result;
     }
 
-    file_put_contents(PROJECT_ROOT . 'config.php', "<?php
-/**
- * ClearMarkup Configuration
- * 
- * This file contains the configuration for the ClearMarkup application.
- * 
- * @package ClearMarkup
- * 
- */
+    $output = trim("
+        # App settings
+        SITENAME=$project_name
+        SITE_URL=$project_url
+        VERSION=0.1.0
+        LOCALE=en_US
+        DEBUG=true
+        OPENSSL_KEY=
+        SESSION_NAME=ClearMarkup
 
-\$config = (object) [
-    'sitename' => '$project_name',
-    'url' => '$project_url',
-    'version' => '0.1.0',
-    'locale' => 'en_US',
-    'debug' => true,
-    'openssl_key' => '',
-    'session_name' => 'ClearMarkup',
-    'database' => " . arrayToString($database) . ",
-    'password_policy' => [
-        'length' => 8,
-        'uppercase' => 1,
-        'lowercase' => 1,
-        'digit' => 1,
-        'special' => 1
-    ],
-    'remember_duration' => (int) (60 * 60 * 24 * 365.25 / 12),
-    'smtp' => [
-        'host' => 'localhost',
-        'SMTPAuth' => false,
-        'username' => 'mail@localhost',
-        'password' => '',
-        'SMTPSecure' => false,
-        'port' => 2500
-    ],
-    'mail_from' => '',
-    'mail_from_text' => ''
-];");
+        # Database settings
+        $database
+
+        # Security settings
+        PASSWORD_POLICY_LENGTH=8
+        PASSWORD_POLICY_UPPERCASE=1
+        PASSWORD_POLICY_LOWERCASE=1
+        PASSWORD_POLICY_DIGIT=1
+        PASSWORD_POLICY_SPECIAL=1
+        REMEMBER_DURATION=31557600
+
+        # SMTP settings
+        SMTP_HOST=localhost
+        SMTP_AUTH=false
+        SMTP_USERNAME=mail@localhost
+        SMTP_PASSWORD=
+        SMTP_SECURE=false
+        SMTP_PORT=2500
+        MAIL_FROM=
+        MAIL_FROM_TEXT="
+    );
+
+    $output = implode("\n", array_map('trim', explode("\n", $output)));
+
+    file_put_contents(PROJECT_ROOT . '.env', $output);
 
     $buildFiles = [
         "controller/",
@@ -129,7 +128,7 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
         "public/",
         "views/",
         "index.php",
-        "config.php",
+        ".env",
     ];
 
     if ($database_type === 'sqlite') {
