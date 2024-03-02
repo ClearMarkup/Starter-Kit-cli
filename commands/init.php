@@ -107,7 +107,7 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
 
     file_put_contents(PROJECT_ROOT . '.env', $output);
 
-    $buildFiles = [
+    $buildAssets = [
         "controller/",
         "routes/",
         "locales/",
@@ -117,12 +117,12 @@ $cli->command('init', 'Initialize ClearMarkup Starter Kit', function () {
     ];
 
     if ($database_type === 'sqlite') {
-        $buildFiles[] = $database_file;
+        $buildAssets[] = $database_file;
     }
 
 
     file_put_contents(PROJECT_ROOT . 'ClearMarkup.json', json_encode([
-        "buildFiles" => $buildFiles
+        "buildAssets" => $buildAssets
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
     $this->print("✅ ClearMarkup Starter Kit initialized successfully", 'green');

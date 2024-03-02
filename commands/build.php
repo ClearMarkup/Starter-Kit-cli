@@ -47,7 +47,7 @@ $cli->command('build', 'Build the project', function () {
         file_put_contents($htaccessPath, $htaccessContent);
     }
 
-    $build_files = $config['buildFiles'];
+    $build_files = $config['buildAssets'];
 
     foreach ($build_files as $file) {
         $filePath = PROJECT_ROOT . $file;
