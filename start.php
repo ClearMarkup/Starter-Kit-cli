@@ -3,6 +3,11 @@ require_once __DIR__ . '/config.php';
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+if ($path !== '/' && substr($path, -1) === '/') {
+    header('Location: ' . rtrim($path, '/'), true, 301);
+    exit;
+}
+
 // Append the path to the public directory
 $filePath = PROJECT_ROOT . 'public' . $path;
 
@@ -24,4 +29,4 @@ if (file_exists($filePath) && !is_dir($filePath)) {
     exit;
 }
 
-include_once PROJECT_ROOT . 'index.php';
+include_once PROJECT_ROOT . 'public/index.php';
